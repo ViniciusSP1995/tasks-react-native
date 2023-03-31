@@ -15,14 +15,14 @@ module.exports = app => {
     }
     const save = (req, res) => {
         if(!req.body.desc.trim()) {
-            return res.status(400).send('Descrilçai é um campo obrigatório')
+            return res.status(400).send('Descrição é um campo obrigatório')
         }
 
         req.body.userId = req.user.id
         app.db('tasks')
             .insert(req.body)
-            then(_ => res.status(204).send())
-            .catch(err => rs.status(400).json(err))
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(400).json(err))
     }
 
     const remove = (req, res) => {
