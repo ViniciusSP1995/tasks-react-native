@@ -6,13 +6,29 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Auth from './screens/Auth'
 import TaskList from './screens/TaskList'
 
+import AuthOrApp from './screens/AuthOrApp'
+import Menu from './screens/Menu'
+import commonStyles from './commonStyles'
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const DrawerNavigator = props => {
     return (
-        <Drawer.Navigator>
+        <Drawer.Navigator
+        initialRouteName='Today'
+        drawerContent={props => <Menu {...props}/>  }
+        screenOptions={{
+            headerShown: false,
+            drawerActiveTintColor: '#080',
+            drawerLabelStyle: {
+                fontFamily: commonStyles.fontFamily,
+                fontWeight: 'normal',
+                fontSize: 20
+            },
+            
+     
+        }}>
             <Drawer.Screen name="Today" options={{ title: 'Hoje'}}>
                 {props => <TaskList {...props} title='Hoje' daysAhead={0} />}
             </Drawer.Screen>
@@ -32,6 +48,7 @@ const DrawerNavigator = props => {
 const AuthNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="AuthOrApp" component={AuthOrApp}/>
             <Stack.Screen name="Auth" component={Auth} />
             <Stack.Screen name="Home" component={DrawerNavigator} />
         </Stack.Navigator>
@@ -43,7 +60,7 @@ const Navigator = () => {
         <NavigationContainer>
             <AuthNavigator/>
         </NavigationContainer>
-    )
+    ) 
 }
 
 export default Navigator;
